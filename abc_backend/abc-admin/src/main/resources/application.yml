@@ -1,0 +1,30 @@
+spring: 
+    application:
+        name: abc_backend
+        version: 0.0.1
+        copyright: www.changxuan.top
+    profiles:
+        active: dev
+    servlet:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+    mail:
+        host: ${MAIL_HOST:smtp.163.com}
+        port: 25
+        username: ${MAIL_USERNAME:ex@163.com}
+        password: ENC(${MAIL_PASSWORD:AEFGHJKL}
+        protocol: smtp
+        test-connection: true
+        default-encoding: UTF-8
+        properties:
+            mail.debug: false
+            mail.smtp.auth: true
+            #      mail.smtp.starttls.enable: true
+            #      mail.smtp.starttls.required: true
+            #      mail.smtp.ssl.enable: true
+            mail.display.sendmail: ${MAIL_DISPLAY_SENDMAIL:abc-service}
+# 为 jasypt 配置解密秘钥
+jasypt:
+    encryptor:
+        password: abc_backend

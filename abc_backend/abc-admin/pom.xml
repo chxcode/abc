@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>abc</artifactId>
+        <groupId>com.abc.cx</groupId>
+        <version>0.0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>abc-admin</artifactId>
+    <packaging>jar</packaging>
+
+    <description>
+        ABC 后台管理系统
+    </description>
+    <dependencies>
+        <!-- 核心模块-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>abc-framework</artifactId>
+            <version>${abc.version}</version>
+        </dependency>
+
+        <!-- Task模块-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>abc-task</artifactId>
+            <version>${abc.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.abc.cx.ABCAdminApplication</mainClass>
+                    <arguments>
+                        <argument>-Dfile.encoding=UTF-8</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

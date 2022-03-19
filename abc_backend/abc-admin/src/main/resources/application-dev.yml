@@ -1,0 +1,129 @@
+spring:
+  thymeleaf:
+    enabled: false
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  datasource:
+    druid:
+      primary:
+        # mysql连接池的配置信息
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:abc_backend}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+        username: ${DB_USERNAME:root}
+        password: ${DB_PASSWORD:123456}
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        # 配置获取连接等待超时的时间
+        maxWait: 60000
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        timeBetweenEvictionRunsMillis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        # 打开PSCache，并且指定每个连接上PSCache的大小
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        filters: stat,wall
+        # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: 123456
+        reset-enable: false
+        url-pattern: /druid/*
+        allow:
+      web-stat-filter:
+        enabled: true
+        # 添加过滤规则
+        url-pattern: /*
+        # 忽略过滤格式
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*,/ic-druid/*"
+  jpa:
+    #database: MYSQL
+    show-sql: true
+    hibernate:
+      primary-dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    database: ${REDIS_DB:10}
+    password: ${REDIS_PASSWORD:123456}
+  session:
+    redis:
+      namespace: abc:admin:session
+    timeout: 86400
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  data:
+    redis:
+      repositories:
+        #不启用RedisRepositories
+        enabled: false
+  cache:
+    #cache策略使用redis，开发时关闭cache使用none
+    type: none
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+#Server
+server:
+  port: 8088
+  tomcat:
+    uri-encoding: utf-8
+    basedir: tmp
+
+# 自定义日志配置文件名称
+logging:
+  config: classpath:logback-dev.xml
+#线程
+pool:
+  #核心线程数
+  core-size: 10
+  #最大线程数
+  max-size: 200
+  #队列最大长度
+  queue-capacity: 10
+#upload path
+upload:
+  local:
+    base-path: d:/tmp/upload/
+    base-url: /upload/
+project:
+  ip-local-parsing: true
+  pwd-timeout: 3600
+  frontend-address: ${PROJECT_FRONTEND_ADDRESS:http://localhost:8080}
+  rsa:
+    private-key: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKuRAIqVXLwQLD9pjJMZg4984F5CMpLx3aC61ReS/ktrFbyeaV6fJLKdU11JkrQCi9vLgdVS5Qk4elo2aA033XSQQMfc2LyGzxo6v1iKG2u342+tRvwwmcZMO7XcKhBrx8hIVhlPoBKaARVMhrRh45MuhfjszVlwmCtaDoKYuBNNAgMBAAECgYBrwD3ey7/aPS4NBXVMTZHa5Erl6B1rPIw9DhoXHDKpmy+jrrnuu3SI2VYqGLMSayb7e+ym1dES4W22isT+yD9EkdQvMSBBex1/tpvcKVSjqOuhTkMo/8anjS6pX3XFDC3ssD3XHxh29X6zDL4pvgg8fWJj7CmMZ6lHZd4+8ngLAQJBAP4ApVtLB8AX728MWlhZBM7x0fBLItK9samfrpHrz+2XkbvW5hOeyq5GMSoTVzAgaNxfNkq01BVpdR+8VEuTs/kCQQCs6mWlIh1+bMNGhvDTw2p1Np2HBPWPhPXPzMyjXQYEKmLYD+XIH5hXRQNpDGBaTVMvrT7V9VbTaO70xnuejQb1AkEA/VX9ltl1yHTW/UYv0dAviIwN3QHDoLdMPKckQSwWPZ2f396NqWIGOt2Naa7SlhCtJabdCpPit9xv0hBPbvXJWQJAGMJXW5XO81NPgsG/qhLJI492bube4nX/XInOo3WmbuJC1P0xwb4EajqPinMjOMrppmIAJVLD4/GahaIGAWXgIQJAf+V1XQ7gnnCRYqxLZvYrLcmFnlBh6lZNJkap+5DGaroaFv14ConbDwaXGKWg7s7s+qph0DUIplt6N/77Y31J+w==
+    public-key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCrkQCKlVy8ECw/aYyTGYOPfOBeQjKS8d2gutUXkv5LaxW8nmlenySynVNdSZK0Aovby4HVUuUJOHpaNmgNN910kEDH3Ni8hs8aOr9Yihtrt+NvrUb8MJnGTDu13CoQa8fISFYZT6ASmgEVTIa0YeOTLoX47M1ZcJgrWg6CmLgTTQIDAQAB
+custom:
+  config:
+    ignores:
+      get:
+        - "/apis/v1/"
+        - "/api/systems/user/check/**"
+        - "/api/systems/user/retrieve/**"
+        - "/api/common/timestamp"
+      # 需要过滤的 post 请求
+      post:
+        - "/api/auth/login"
+        - "/api/auth/logout"
+        - "/api/systems/user/register"
+      put:
+        - "/api/systems/user/verify/*"
+        - "/api/systems/user/resetPwd"
+      # 需要过滤的请求，不限方法
+      pattern:
+        - "/test/*"
