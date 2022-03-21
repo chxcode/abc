@@ -11,18 +11,18 @@ spring:
             max-request-size: 100MB
     mail:
         host: ${MAIL_HOST:smtp.163.com}
-        port: 25
+        port: ${MAIL_PORT:25}
         username: ${MAIL_USERNAME:ex@163.com}
-        password: ENC(${MAIL_PASSWORD:AEFGHJKL}
+        password: ENC(pC1dG9Uzoq+zoPPaCj41G7/Hlq2MpeAo)
         protocol: smtp
         test-connection: true
         default-encoding: UTF-8
         properties:
             mail.debug: false
             mail.smtp.auth: true
-            #      mail.smtp.starttls.enable: true
-            #      mail.smtp.starttls.required: true
-            #      mail.smtp.ssl.enable: true
+            mail.smtp.starttls.enable: true
+            mail.smtp.starttls.required: true
+            mail.smtp.ssl.enable: true
             mail.display.sendmail: ${MAIL_DISPLAY_SENDMAIL:abc-service}
 # 为 jasypt 配置解密秘钥
 jasypt:
