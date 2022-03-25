@@ -13,7 +13,7 @@ spring:
         host: ${MAIL_HOST:smtp.163.com}
         port: ${MAIL_PORT:25}
         username: ${MAIL_USERNAME:ex@163.com}
-        password: ENC(pC1dG9Uzoq+zoPPaCj41G7/Hlq2MpeAo)
+        password: ${MAIL_PASSWORD:123456}
         protocol: smtp
         test-connection: true
         default-encoding: UTF-8
